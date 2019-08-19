@@ -56,49 +56,39 @@ library(dplyr)
 
 <<Load data>>= 
 data.scopus = read.csv2(file.path(PATH_DATA, FILE_SCOPUS), header = TRUE, sep = ",", row.names = NULL)
+class(data.scopus$Source.title)
+class(data.scopus)
 @
 
 <<Cleaning of Journal titles>>=
+
 hasScience = grepl("science", data.scopus$Source.title, ignore.case = TRUE)
 isScienceFamily = grepl("^Science$|^Science Signaling$|^Science Translational Medicine$|^Science Advances$|^Science Immunology$", data.scopus$Source.title, ignore.case = TRUE)
 
-idx = !(hasScience == 1 & isScienceFamily == 0)
+idx = !(hasScience == 1 & isScienceFamily == 0) # we observe that our dataset's Source.title which has the word "Science" in it AND is part of the "Science family of journals" has no cases.  We use the indices of these, to filter our data:
 data.scopus = data.scopus[idx,]
-data.scopus$Source.title = as.factor(as.character(data.scopus$Source.title))
 
-# remove Information Systems Frontiers ("ISF")
+summary(data.scopus$Source.title) 
+nrow(data.scopus) # 508 rows
+
+
+# remove Information Systems Frontiers ("ISF"). there are 3 cases
 hasISF = grepl("Information Systems Frontiers", data.scopus$Source.title, ignore.case = TRUE)
 idx_ISF <- !(hasISF == 1)
-data.scopus <- data.scopus[idx_ISF, ]
+data.scopus <- data.scopus[idx_ISF, ] # a new dataset 
+data.scopus$Source.title = as.factor(as.character(data.scopus$Source.title))
+summary(data.scopus$Source.title) # we see that we removed the ISF
+summary(data.scopus$Source.title == "Information Systems Frontiers") # confirm again three are removed 
 
-# take "PloS one" in Source.title and replace with"PLoS ONE"
-hasPloSone = grepl("PloS one", data.scopus$Source.title, ignore.case = TRUE)
-idx_PlosOne <- (hasPloSone == 1)
-data.scopus <- sub("PloS one", "PLoS ONE", data.scopus$Source.title)
-#data.scopus$Source.title == "PloS one"
+# take "PloS one" in Source.title and replace with"PLoS ONE" there is 1 case only
+hasPloSone = grepl("PloS one", data.scopus$Source.title, ignore.case = FALSE)
+idx_PlosOne <- !(hasPloSone == 1)
+summary(idx_PlosOne)
+data.scopus$Source.title <- sub("PloS one", "PLoS ONE", data.scopus$Source.title)
+
 data.scopus$Source.title = as.factor(as.character(data.scopus$Source.title))
 
-summary(data.scopus$Source.title)
-
-
-
-Science_family = c( "Science", "Science Signaling", "Science Translational Medicine", "Science Advances", "Science Immunology", "Science Robotics")
-Journals <- c("Nature", "PLoS", "Royal Society Open Science")
-unique(data.scopus$`Source.title`) #274
-(data.scopus$`Source.title` == "all")
-names(data.scopus)
-
-Htt <- subset(data.scopus, `Source.title` = "all", select = c(Authors:EID))
-View(Htt)
-#################
-
-
-Scopus2 <-  grep("^Science$|^Science Signaling$|^Science Translational Medicine$|Science Advances$|Science Immunology$|^Science Robotics$|", Scopus$`Source title`, value = TRUE, ignore.case = TRUE)
-length(Scopus2) #985 rows
-index <- grepl(index, Scopus$`Source title`, value= TRUE, ignore.case = FALSE)
-
-
-data.scopus$
+summary(data.scopus$Source.title) # we now see that Information System Frontiers has been removed and PLoS One has increased in 1 more case.
 
 @
 
