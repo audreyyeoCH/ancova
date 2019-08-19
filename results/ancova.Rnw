@@ -60,10 +60,17 @@ data.scopus = read.csv2(file.path(PATH_DATA, FILE_SCOPUS), header = TRUE, sep = 
 
 <<Cleaning of Journal titles>>=
 hasScience = grepl("science", data.scopus$Source.title, ignore.case = TRUE)
-isScienceFamaly = grepl("^Science$|^Science Signaling$|^Science Translational Medicine$|^Science Advances$|^Science Immunology$", data.scopus$Source.title, ignore.case = TRUE)
+isScienceFamily = grepl("^Science$|^Science Signaling$|^Science Translational Medicine$|^Science Advances$|^Science Immunology$", data.scopus$Source.title, ignore.case = TRUE)
 
-idx = !(hasScience == 1 & isScienceFamaly == 0)
-idx1 = !(data.scopus$Source.title == "PloS one")
+
+idx = !(hasScience == 1 & isScienceFamily == 0)
+#idx = !(data.scopus$Source.title == "PloS one")
+
+# change typo
+hasPloSone = grepl("PloS one", data.scopus$Source.title, ignore.case = TRUE)
+idx_PlosOne <- !(hasPloSone == 1)
+
+
 !(data.scopus$Source.title == "PloS one") #74rd journal
 !(data.scopus$Source.title == "Information Systems and Evolution")
 
