@@ -1,0 +1,87 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage{rotating}
+
+\usepackage [english]{babel}
+\usepackage[autostyle]{csquotes}
+
+\renewcommand\refname{}
+
+\title{Robustnes of analysis of covariance in the medical and psychology literature: A meta-research study}
+\author{Simon Schwab, Audrey Yeo}
+
+\input{setup_20180629}
+\bibliographystyle{ims}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+  fig.path='plots/p', echo = FALSE, results='hide'
+)
+@
+
+\begin{document}
+
+\maketitle
+
+\sloppy
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+  concordance=TRUE
+)
+@
+
+<<Variables>>=
+PATH_HOME = path.expand("~") # user home
+PATH = file.path(PATH_HOME, 'Data/ancova')
+# folders
+PATH_RESULTS = file.path(PATH, 'results')
+PATH_DATA    = file.path(PATH, 'data')
+PATH_FIGURES = file.path(PATH_RESULTS, 'figures')
+# files
+FILE_SCOPUS = 'scopus_export-140819.csv'
+FILE_PUBMED = 'pubmed_results-140819.csv'
+@
+<<Libraries>>=
+library(xtable)
+library(testit)
+library(data.table)
+@
+
+
+<<Load data>>= 
+data.scopus = read.csv2(file.path(PATH_DATA, FILE_SCOPUS), header = TRUE, sep = ",", row.names = NULL)
+data.pubmed = read.csv2(file.path(PATH_DATA, FILE_PUBMED), header = TRUE, sep = ",", row.names = NULL)
+journal = gsub("(19|20)\\d{2}|\\.", "", data.pubmed$Details) # remove year and dots
+journal = gsub("^\\s+|\\s+$", "", journal) # replace leading/ending spaces
+data.pubmed$journal = as.factor(journal)
+
+@
+
+<<Top 10 journals with ANCOVA>>=
+sort(summary(data.scopus$Source.title), decreasing = T)[2:10]
+sort(summary(data.pubmed$journal), decreasing = T)[2:10]
+@
+
+<<Sampling>>=
+set.seed(1980)
+idx = sample(nrow(data.bib), 50)
+sort(summary(data.bib[idx,]$Source.title), decreasing = F)
+
+
+@
+
+
+
+\newpage 
+The objective of this document...
+
+
+
+\bibliography{biblio}
+
+\end{document}

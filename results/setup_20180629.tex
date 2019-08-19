@@ -1,0 +1,153 @@
+%% Setup file for Biostatistics Unit Consulting Report Template
+%% Version 2.0, with new Corporate Design elements (Logo and fonts Arial and Palatino)
+%% Sarah R Haile, 27.08.2010
+
+%% Version 3.0, Captions changed in sans serif.
+%% Sina Rueeger, 29.08.2012
+
+%% Version 3.1: Multiple authors.
+%% Niels Hagenbuch, 05.02.2015
+
+%% Version 3.2: Multiple authors.
+%% Klaus Steigmiller, Ulrike Held, 29.6.2018
+
+
+\usepackage{xspace}
+
+% put nameone equal to nametwo if you are the only author
+\newcommand{\nameone}{Simon Schwab}  %% Junior
+\newcommand{\mailone}{simon.schwab@uzh.ch}  %% Junior
+\newcommand{\nametwo}{Leonhard Held} %% Senior
+\newcommand{\mailtwo}{leonhard.held@uzh.ch} %% Senior
+\newcommand{\web}{www.biostat.uzh.ch}
+
+\newcommand{\grp}{Epidemiology, Biostatistics and Prevention
+  Institute, Biostatistics Department}
+\newcommand{\grpone}{Epidemiology, Biostatistics}
+\newcommand{\grptwo}{and Prevention Institute,}
+\newcommand{\grpthr}{Biostatistics Department}
+\newcommand{\inst}{University of Zurich}
+\newcommand{\tel}{+41 44 634 46 41} %% telephone number of Eveline Bielser (Sekretariat)
+\newcommand{\abk}{EBPI\xspace}
+\newcommand{\img}{\includegraphics[height=17mm, width = 53mm]{uzh_logo_e_pos}}
+\newcommand{\of}{of\xspace}
+
+\newcommand{\var}[1]{{\texttt{#1}}}
+\newcommand{\code}[1]{{\texttt{#1}}}
+\newcommand{\prog}[1]{\textsf{#1}}
+\newcommand{\pkg}[1]{\texttt{#1}}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+
+\newcommand{\mytitle}[3]{
+\begin{center}
+\vspace*{-2.1cm}
+
+\HRule
+
+\vspace*{0.4cm}
+
+\begin{minipage}{0.4\textwidth}
+\thispagestyle{empty}
+\begin{flushleft}
+\hspace*{1cm}\img
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.59\textwidth}
+\begin{flushleft} \large
+    \hspace*{3.8cm} \textsf{\grpone} \\
+    \hspace*{3.8cm} \textsf{\grptwo} \\
+    \hspace*{3.8cm} \textsf{\grpthr} \\
+    \hspace*{3.8cm} \textsf{\tel} \\
+    \hspace*{3.8cm} \href{http://\web}{\textsf{\emph{\web}}}
+\end{flushleft}
+\end{minipage}
+
+\vspace*{0.4cm} \HRule
+
+\bigskip
+
+\textsf{\LARGE #2} \vspace*{0.5cm}
+
+\large{#1}
+
+\medskip
+
+\large{\nameone \ (\textit{\mailone}) \\}
+\large{\nametwo \ (\textit{\mailtwo})}
+
+\medskip
+
+Version #3 \of \versiondate
+
+\end{center}
+
+\medskip
+}
+
+
+\newcommand{\disclaimer}{
+\hrule
+%\medskip
+{\footnotesize
+\begin{center}
+{\bf DISCLAIMER}
+\end{center}
+\emph{This report was written by the Research Methods Consulting Unit of the \inst, \grp\ (\abk). Any citation of results or comments (or parts thereof) given in this report in any format (including: paper, presentation, abstract, grant application) or the naming of \abk or persons of the \abk requires the explicit approval of the senior statistician (\nametwo). This is especially true for citations in the ``acknowledgments''.}}
+\smallskip
+\hrule
+
+\bigskip
+}
+
+\newcommand{\disclaimerDE}{
+\hrule
+%    \medskip
+{\footnotesize
+\begin{center}
+{\bf DISCLAIMER}
+\end{center}
+ \emph{Dieser Bericht wurde im Rahmen der statistischen Beratung, angeboten von der \inst, \grp\ (\abk), erstellt. Jegliches Zitieren von Resultaten oder Kommentaren (oder Teilen davon) aus diesem Bericht (z.B. in Publikationen, Vortr\"agen, Abstracts, Projektantr\"agen) sowie das Erw\"ahnen des \abk oder Personen des \abk muss zwingend mit dem Autor (\nameone) abgesprochen werden. Dies gilt insbesondere auch f\"ur Nennungen in allf\"alligen ``Acknowledgments''. }}
+\smallskip
+\hrule
+
+\bigskip
+}
+
+\usepackage{verbatim}
+\usepackage[vmargin=3cm, hmargin=2cm]{geometry}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{natbib}
+
+% Use Palatino (URW Palladio) for most of the text\ldots
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}
+\linespread{1.05}
+
+% And Arial for the rest
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{helvet}
+
+% sans serif caption (added by sina)
+\usepackage[font=sf, labelfont={sf}, margin=1cm]{caption}
+
+\fancypagestyle{standard}{
+\fancyhf{}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[ce, co]{\thepage}
+\fancyfoot[le, lo]{\textsf{\nameone}, \href{\mailone}{\textsf{\emph{\mailone}}}}
+\fancyfoot[re, ro]{\textsf{\versiondate}}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[ce, co]{}
+\fancyhead[le, lo]{\textsf{\grp}}
+\fancyhead[re, ro]{\textsf{\inst}}
+}
+
+
