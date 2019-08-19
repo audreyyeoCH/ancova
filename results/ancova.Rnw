@@ -80,7 +80,7 @@ names(data.scopus)
 
 Htt <- subset(data.scopus, `Source.title` = "all", select = c(Authors:EID))
 View(Htt)
-###########
+#################
 
 
 Scopus2 <-  grep("^Science$|^Science Signaling$|^Science Translational Medicine$|Science Advances$|Science Immunology$|^Science Robotics$|", Scopus$`Source title`, value = TRUE, ignore.case = TRUE)
