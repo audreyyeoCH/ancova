@@ -37,7 +37,7 @@ opts_chunk$set(
 
 <<Variables>>=
 PATH_HOME = path.expand("~") # user home
-PATH = file.path(PATH_HOME, 'Data/ancova')
+PATH = file.path(PATH_HOME, 'Deskstop/UZH CRS/ancova')
 # folders
 PATH_RESULTS = file.path(PATH, 'results')
 PATH_DATA    = file.path(PATH, 'data')
