@@ -62,21 +62,24 @@ data.scopus = read.csv2(file.path(PATH_DATA, FILE_SCOPUS), header = TRUE, sep = 
 hasScience = grepl("science", data.scopus$Source.title, ignore.case = TRUE)
 isScienceFamily = grepl("^Science$|^Science Signaling$|^Science Translational Medicine$|^Science Advances$|^Science Immunology$", data.scopus$Source.title, ignore.case = TRUE)
 
-
 idx = !(hasScience == 1 & isScienceFamily == 0)
-#idx = !(data.scopus$Source.title == "PloS one")
-
-# change typo
-hasPloSone = grepl("PloS one", data.scopus$Source.title, ignore.case = TRUE)
-idx_PlosOne <- !(hasPloSone == 1)
-
-
-!(data.scopus$Source.title == "PloS one") #74rd journal
-!(data.scopus$Source.title == "Information Systems and Evolution")
-
-
 data.scopus = data.scopus[idx,]
 data.scopus$Source.title = as.factor(as.character(data.scopus$Source.title))
+
+# remove Information Systems Frontiers ("ISF")
+hasISF = grepl("Information Systems Frontiers", data.scopus$Source.title, ignore.case = TRUE)
+idx_ISF <- !(hasISF == 1)
+data.scopus <- data.scopus[idx_ISF, ]
+
+# take "PloS one" in Source.title and replace with"PLoS ONE"
+hasPloSone = grepl("PloS one", data.scopus$Source.title, ignore.case = TRUE)
+idx_PlosOne <- (hasPloSone == 1)
+data.scopus <- sub("PloS one", "PLoS ONE", data.scopus$Source.title)
+#data.scopus$Source.title == "PloS one"
+data.scopus$Source.title = as.factor(as.character(data.scopus$Source.title))
+
+summary(data.scopus$Source.title)
+
 
 
 Science_family = c( "Science", "Science Signaling", "Science Translational Medicine", "Science Advances", "Science Immunology", "Science Robotics")
