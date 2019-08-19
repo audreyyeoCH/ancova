@@ -37,30 +37,61 @@ opts_chunk$set(
 
 <<Variables>>=
 PATH_HOME = path.expand("~") # user home
-PATH = file.path(PATH_HOME, 'Deskstop/UZH CRS/ancova')
+PATH = file.path(PATH_HOME, 'Desktop/CRS/ancova')
 # folders
 PATH_RESULTS = file.path(PATH, 'results')
 PATH_DATA    = file.path(PATH, 'data')
 PATH_FIGURES = file.path(PATH_RESULTS, 'figures')
 # files
-FILE_SCOPUS = 'scopus_export-140819.csv'
-FILE_PUBMED = 'pubmed_results-140819.csv'
+FILE_SCOPUS = 'scopus_export-19082019.csv'
+# FILE_PUBMED = 'pubmed_results-140819.csv'
 @
 <<Libraries>>=
 library(xtable)
 library(testit)
 library(data.table)
+library(dplyr)
 @
 
 
 <<Load data>>= 
 data.scopus = read.csv2(file.path(PATH_DATA, FILE_SCOPUS), header = TRUE, sep = ",", row.names = NULL)
-data.pubmed = read.csv2(file.path(PATH_DATA, FILE_PUBMED), header = TRUE, sep = ",", row.names = NULL)
-journal = gsub("(19|20)\\d{2}|\\.", "", data.pubmed$Details) # remove year and dots
-journal = gsub("^\\s+|\\s+$", "", journal) # replace leading/ending spaces
-data.pubmed$journal = as.factor(journal)
+@
+
+<<Cleaning of Journal titles>>=
+hasScience = grepl("science", data.scopus$Source.title, ignore.case = TRUE)
+isScienceFamaly = grepl("^Science$|^Science Signaling$|^Science Translational Medicine$|^Science Advances$|^Science Immunology$", data.scopus$Source.title, ignore.case = TRUE)
+
+idx = !(hasScience == 1 & isScienceFamaly == 0)
+idx1 = !(data.scopus$Source.title == "PloS one")
+!(data.scopus$Source.title == "PloS one") #74rd journal
+!(data.scopus$Source.title == "Information Systems and Evolution")
+
+
+data.scopus = data.scopus[idx,]
+data.scopus$Source.title = as.factor(as.character(data.scopus$Source.title))
+
+
+Science_family = c( "Science", "Science Signaling", "Science Translational Medicine", "Science Advances", "Science Immunology", "Science Robotics")
+Journals <- c("Nature", "PLoS", "Royal Society Open Science")
+unique(data.scopus$`Source.title`) #274
+(data.scopus$`Source.title` == "all")
+names(data.scopus)
+
+Htt <- subset(data.scopus, `Source.title` = "all", select = c(Authors:EID))
+View(Htt)
+###########
+
+
+Scopus2 <-  grep("^Science$|^Science Signaling$|^Science Translational Medicine$|Science Advances$|Science Immunology$|^Science Robotics$|", Scopus$`Source title`, value = TRUE, ignore.case = TRUE)
+length(Scopus2) #985 rows
+index <- grepl(index, Scopus$`Source title`, value= TRUE, ignore.case = FALSE)
+
+
+data.scopus$
 
 @
+
 
 <<Top 10 journals with ANCOVA>>=
 sort(summary(data.scopus$Source.title), decreasing = T)[2:10]
