@@ -27,6 +27,7 @@ library(multcomp) #for post hoc test
 library(pastecs)# for descriptive statistics
 library(WRS) # for robust test
 library(knitr)
+library(janitor)
 opts_chunk$set(
   fig.path='plots/p', echo = FALSE, results='hide'
 )
@@ -99,17 +100,20 @@ summary(data.scopus$Source.title) # we now see that Information System Frontiers
 @
 
 <<Top 10 journals with ANCOVA>>=
+#tt <- xtabs(~sort(Source.title), data = data.scopus)
 tt <- sort(summary(data.scopus$Source.title), decreasing = TRUE)
-#sort(summary(data.pubmed$journal), decreasing = T)[2:10] there are no pubmet
+tt <- as.data.frame(tt)
+tt10 <- tt[1:10,] #top 10
+#sort(summary(data.pubmed$journal), decreasing = T)[2:10] there are no pubmed
+knitr::kable(tt10, row.names = TRUE, booktabs = TRUE, format = "latex")
 @
 
 <<Sampling>>=
 set.seed(1980)
-index = sample(nrow(data.scopus), 20)
+index = sample(nrow(data.scopus), 20) # we sampled 20 papers
 index
 data.scopus_sample1 <- data.scopus[index,]
 str(data.scopus_sample1)
-tt1 <- data.scopus_sample1[,"Author"]
 # sort(summary(data.scopus[index,]$Source.title), decreasing = FALSE)
 @
 
@@ -119,6 +123,10 @@ data.scopus_sample1 %>%
   arrange(Source.title) -> sample1
 View(sample1)
 knitr::kable(data.scopus_sample1, row.names = FALSE, booktabs = TRUE, format = "latex")
+@
+
+<<>>=
+
 @
 
 
