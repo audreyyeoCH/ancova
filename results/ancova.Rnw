@@ -15,8 +15,7 @@
 \input{setup_20180629}
 \bibliographystyle{ims}
 
-<<include=FALSE>>=
-library(dpylr)
+<<setup, include=FALSE, echo=FALSE>>=
 library(foreign)
 library(readxl)
 library(readstata13)
@@ -111,13 +110,15 @@ index
 data.scopus_sample1 <- data.scopus[index,]
 str(data.scopus_sample1)
 tt1 <- data.scopus_sample1[,"Author"]
-knitr::kable(data.scopus_sample1, row.names = FALSE, booktabs = TRUE, format = "latex")
 # sort(summary(data.scopus[index,]$Source.title), decreasing = FALSE)
 @
 
-<<table>>=
+<<sample1, results='asis', warning=FALSE, message=FALSE, error=FALSE, echo=FALSE>>=
 data.scopus_sample1 %>% 
-  select <- c("Authors", "Title", "Year", "Source.title") -> sample1
+  select("Authors", "Title", "Year", "Source.title") %>% 
+  arrange(Source.title) -> sample1
+View(sample1)
+knitr::kable(data.scopus_sample1, row.names = FALSE, booktabs = TRUE, format = "latex")
 @
 
 
