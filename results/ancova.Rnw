@@ -16,6 +16,17 @@
 \bibliographystyle{ims}
 
 <<include=FALSE>>=
+library(dpylr)
+library(foreign)
+library(readxl)
+library(readstata13)
+library(car) # for levene's test
+library(compute.es)
+library(effects)# for adjusted means
+library(ggplot2) # for graphs
+library(multcomp) #for post hoc test
+library(pastecs)# for descriptive statistics
+library(WRS) # for robust test
 library(knitr)
 opts_chunk$set(
   fig.path='plots/p', echo = FALSE, results='hide'
@@ -53,7 +64,6 @@ library(data.table)
 library(dplyr)
 @
 
-
 <<Load data>>= 
 data.scopus = read.csv2(file.path(PATH_DATA, FILE_SCOPUS), header = TRUE, sep = ",", row.names = NULL)
 class(data.scopus$Source.title)
@@ -62,18 +72,17 @@ class(data.scopus)
 
 <<Cleaning of Journal titles>>=
 
+# ( ALL ( ( anova  OR  "analysis of variance" )  AND  covariate )  OR  ALL ( ancova  OR  "analysis of covariance" ) )  AND  PUBYEAR  >  2016  AND  ( SRCTITLE ( "frontiers" )  OR  SRCTITLE ( "plos" )  OR  SRCTITLE ( "Nature" )  OR  SRCTITLE ( "Science" )  OR  SRCTITLE ( "Scientific Reports" )  OR  SRCTITLE ( "Royal Society Open Science" )  OR  SRCTITLE ( "BMJ" )  OR  SRCTITLE ( "Proceedings of the National Academy of Sciences of the United States of America" )  OR  SRCTITLE ( "BMC" ) )  AND  ( LIMIT-TO ( SRCTYPE ,  "j" ) )  AND  ( LIMIT-TO ( DOCTYPE ,  "ar" ) )
+
 hasScience = grepl("science", data.scopus$Source.title, ignore.case = TRUE)
 isScienceFamily = grepl("^Science$|^Science Signaling$|^Science Translational Medicine$|^Science Advances$|^Science Immunology$", data.scopus$Source.title, ignore.case = TRUE)
-
 idx = !(hasScience == 1 & isScienceFamily == 0) # we observe that our dataset's Source.title which has the word "Science" in it AND is part of the "Science family of journals" has no cases.  We use the indices of these, to filter our data:
 data.scopus = data.scopus[idx,]
-
 summary(data.scopus$Source.title) 
 nrow(data.scopus) # 508 rows
 
-
 # remove Information Systems Frontiers ("ISF"). there are 3 cases
-hasISF = grepl("Information Systems Frontiers", data.scopus$Source.title, ignore.case = TRUE)
+hasISF <- grepl("Information Systems Frontiers", data.scopus$Source.title, ignore.case = TRUE)
 idx_ISF <- !(hasISF == 1)
 data.scopus <- data.scopus[idx_ISF, ] # a new dataset 
 data.scopus$Source.title = as.factor(as.character(data.scopus$Source.title))
@@ -85,25 +94,30 @@ hasPloSone = grepl("PloS one", data.scopus$Source.title, ignore.case = FALSE)
 idx_PlosOne <- !(hasPloSone == 1)
 summary(idx_PlosOne)
 data.scopus$Source.title <- sub("PloS one", "PLoS ONE", data.scopus$Source.title)
-
-data.scopus$Source.title = as.factor(as.character(data.scopus$Source.title))
-
+data.scopus$Source.title <- as.factor(as.character(data.scopus$Source.title))
+data.scopus <- data.scopus[idx_PlosOne, ] # a new dataset 
 summary(data.scopus$Source.title) # we now see that Information System Frontiers has been removed and PLoS One has increased in 1 more case.
-
 @
 
-
 <<Top 10 journals with ANCOVA>>=
-sort(summary(data.scopus$Source.title), decreasing = T)[2:10]
-sort(summary(data.pubmed$journal), decreasing = T)[2:10]
+tt <- sort(summary(data.scopus$Source.title), decreasing = TRUE)
+#sort(summary(data.pubmed$journal), decreasing = T)[2:10] there are no pubmet
 @
 
 <<Sampling>>=
 set.seed(1980)
-idx = sample(nrow(data.bib), 50)
-sort(summary(data.bib[idx,]$Source.title), decreasing = F)
+index = sample(nrow(data.scopus), 20)
+index
+data.scopus_sample1 <- data.scopus[index,]
+str(data.scopus_sample1)
+tt1 <- data.scopus_sample1[,"Author"]
+knitr::kable(data.scopus_sample1, row.names = FALSE, booktabs = TRUE, format = "latex")
+# sort(summary(data.scopus[index,]$Source.title), decreasing = FALSE)
+@
 
-
+<<table>>=
+data.scopus_sample1 %>% 
+  select <- c("Authors", "Title", "Year", "Source.title") -> sample1
 @
 
 
