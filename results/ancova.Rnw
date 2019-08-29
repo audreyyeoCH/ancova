@@ -16,18 +16,7 @@
 \bibliographystyle{ims}
 
 <<setup, include=FALSE, echo=FALSE>>=
-library(foreign)
-library(readxl)
-library(readstata13)
-library(car) # for levene's test
-library(compute.es)
-library(effects)# for adjusted means
-library(ggplot2) # for graphs
-library(multcomp) #for post hoc test
-library(pastecs)# for descriptive statistics
-library(WRS) # for robust test
-library(knitr)
-library(janitor)
+
 opts_chunk$set(
   fig.path='plots/p', echo = FALSE, results='hide'
 )
@@ -40,7 +29,7 @@ opts_chunk$set(
 \sloppy
 
 <<include=FALSE>>=
-library(knitr)
+
 opts_chunk$set(
   concordance=TRUE
 )
@@ -59,9 +48,22 @@ FILE_SCOPUS = 'scopus_export-19082019.csv'
 @
 <<Libraries>>=
 library(xtable)
-library(testit)
-library(data.table)
+#library(testit)
+#library(data.table)
 library(dplyr)
+library(knitr)
+library(foreign)
+library(readxl)
+library(readstata13)
+library(car) # for levene's test
+library(compute.es)
+library(effects)# for adjusted means
+library(ggplot2) # for graphs
+library(multcomp) #for post hoc test
+library(pastecs)# for descriptive statistics
+library(WRS) # for robust test
+library(knitr)
+library(janitor)
 @
 
 <<Load data>>= 
@@ -101,8 +103,8 @@ summary(data.scopus$Source.title) # we now see that Information System Frontiers
 
 <<Top 10 journals with ANCOVA>>=
 #tt <- xtabs(~sort(Source.title), data = data.scopus)
-tt <- sort(summary(data.scopus$Source.title), decreasing = TRUE)
-tt <- as.data.frame(tt)
+tt <- sort(summary(data.scopus$Source.title), decreasing = TRUE) #top 20 in descending order
+tt <- as.data.frame(tt) 
 tt10 <- tt[1:10,] #top 10
 #sort(summary(data.pubmed$journal), decreasing = T)[2:10] there are no pubmed
 knitr::kable(tt10, row.names = TRUE, booktabs = TRUE, format = "latex")
@@ -112,6 +114,7 @@ knitr::kable(tt10, row.names = TRUE, booktabs = TRUE, format = "latex")
 set.seed(1980)
 index = sample(nrow(data.scopus), 20) # we sampled 20 papers
 index
+# [1] 353  86 467 457  31 244 440 361 344 432  23 118 230 460 480 425 334 220 503 188
 data.scopus_sample1 <- data.scopus[index,]
 str(data.scopus_sample1)
 # sort(summary(data.scopus[index,]$Source.title), decreasing = FALSE)
@@ -119,13 +122,49 @@ str(data.scopus_sample1)
 
 <<sample1, results='asis', warning=FALSE, message=FALSE, error=FALSE, echo=FALSE>>=
 data.scopus_sample1 %>% 
-  select("Authors", "Title", "Year", "Source.title") %>% 
+  select("Authors", "Title", "Year", "Source.title", "DOI") %>% 
   arrange(Source.title) -> sample1
-View(sample1)
+
+str(data,scopus_sample1)
 knitr::kable(data.scopus_sample1, row.names = FALSE, booktabs = TRUE, format = "latex")
 @
 
 <<>>=
+sample1$DOI[1:10]
+@
+
+<<data input>>=
+
+Comment <- rep(0, nrow(sample1))
+Type <- rep(NA, nrow(sample1))
+cbind(sample1, Comment)
+sample1[ 1, "Comment"] -> "The datasets used and/or analyzed during the current study are available from the corresponding author on reasonable request."
+sample1[ 2, "Comment"] -> "Data sharing is not applicable to this article as no datasets were generated or analysed during the current study."
+sample1[ 3, "Comment"] -> "Not Applicable."
+sample1[ 3, "Comment"] -> "Not Applicable."
+sample1[ 4, "Comment"] -> "NA"
+sample1[ 5, "Comment"] -> "NA"
+sample1[ 6, "Comment"] -> "NA"
+sample1[ 7, "Comment"] -> "NA"
+sample1[ 8, "Comment"] -> "NA"
+sample1[ 9, "Comment"] -> "NA"
+sample1[ 10, "Comment"] -> "NA"
+sample1[ 11, "Comment"] -> "NA"
+sample1[ 12, "Comment"] -> "NA"
+sample1[ 13, "Comment"] -> "All relevant data are within the paper and its Supporting Information files."
+sample1[ 13, "type"] -> "sav."
+sample1[ 14, "Comment"] -> "All relevant data files are available from Dryad Digital Repository"
+sample1[ 14, "type"] -> "sav."
+sample1[ 15, "Comment"] -> "The data are available with DOI..."
+sample1[ 15, "type"] -> "txt."
+sample1[ 16, "Comment"] -> "All relevant data are within the paper."
+sample1[ 16, "type"] -> "pdf."
+sample1[ 17, "Comment"] -> "All relevant data are within the paper."
+sample1[ 17, "type"] -> "pdf."
+sample1[ 18, "Comment"] -> "There are restrictions prohibiting the provision of data in this manuscript. The data were obtained from a third party upon application to the national steering group (NATSUP). All interested researchers can apply for data from the Danish National Health Survey at the National Institute of Public Health (Email..."
+sample1[ 19, "Comment"] -> "TThe data were collected from hypertensive patients in several hospitals in Ethiopia, and cannot be shared due to patient confidentiality. During data collection, the authors agreed with patients not to share the data publicly. Data requests may be sent to Adigrat University Ethics Review Committee, e-mail:..."
+sample1[ 20, "Comment"] -> "The datasets generated during the present study are available from the corresponding author on reasonable request."
+
 
 @
 
