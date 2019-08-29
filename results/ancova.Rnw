@@ -99,6 +99,7 @@ data.scopus$Source.title <- sub("PloS one", "PLoS ONE", data.scopus$Source.title
 data.scopus$Source.title <- as.factor(as.character(data.scopus$Source.title))
 data.scopus <- data.scopus[idx_PlosOne, ] # a new dataset 
 summary(data.scopus$Source.title) # we now see that Information System Frontiers has been removed and PLoS One has increased in 1 more case.
+nrow(data.scopus)
 @
 
 <<Top 10 journals with ANCOVA>>=
@@ -113,6 +114,7 @@ knitr::kable(tt10, row.names = TRUE, booktabs = TRUE, format = "latex")
 <<Sampling>>=
 set.seed(1980)
 index = sample(nrow(data.scopus), 20) # we sampled 20 papers
+hi <- sample(nrow(data.scopus), 20)
 index
 # [1] 353  86 467 457  31 244 440 361 344 432  23 118 230 460 480 425 334 220 503 188
 data.scopus_sample1 <- data.scopus[index,]
