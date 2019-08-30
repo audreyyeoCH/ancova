@@ -113,8 +113,9 @@ knitr::kable(tt10, row.names = TRUE, booktabs = TRUE, format = "latex")
 
 <<Sampling>>=
 set.seed(1980)
-index = sample(nrow(data.scopus), 20) # we sampled 20 papers
+#index = sample(nrow(data.scopus), 20) # we sampled 20 papers
 #hi <- sample(nrow(data.scopus), 20)
+index = sample(nrow(data.scopus), 50) 
 index
 # [1] 353  86 467 457  31 244 440 361 344 432  23 118 230 460 480 425 334 220 503 188
 data.scopus_sample1 <- data.scopus[index,]
@@ -133,17 +134,21 @@ sample1$DOI[1:10]
 
 <<data input>>=
 
-D_avail <- rep(NA, nrow(sample1))
+Comment <- rep(NA, nrow(sample1))
+Investigator_comment <-  rep(NA, nrow(sample1))
 Type <- rep(NA, nrow(sample1))
-ANCOVA_comment <- rep(NA, nrow(sample21))
-cbind(sample1, Comment)
+ANCOVA_comment <- rep(NA, nrow(sample1))
+sample1 <- cbind(sample1, Comment, Investigator_comment, Type, ANCOVA_comment)
+str(sample1)
 sample1[ 3, "Comment"] -> "Not Applicable."
 sample1[ 3, "Comment"] -> "Not Applicable."
 sample1[ 5, "Comment"] -> "The datasets used and/or analyzed during the current study are available from the corresponding author on reasonable request."
 sample1[ 6, "Comment"] -> "All relevant data are within the paper and its Supporting Information files."
 sample1[ 7, "Comment"] -> "All relevant data files are available from Dryad Digital Repository: http://dx.doi.org/10.5061/dryad.1q8h3."
 sample1[ 9, "Comment"] -> "The data are available with DOI:10.6084/m9.figshare.5596921."
+sample1[ 9, "Type"] -> "txt."
 sample1[ 11, "Comment"] -> "Data sharing is not applicable to this article as no datasets were generated or analysed during the current study."
+sample1[ 11, "Investigator_comment"] -> "The txt. file is not raw data."
 sample1[ 14, "Comment"] -> "All relevant data are within the paper."
 sample1[ 14, "type"] -> "pdf."
 sample1[ 15, "Comment"] -> "All relevant data are within the paper."
@@ -154,7 +159,18 @@ sample1[ 17, "Comment"] -> "The datasets generated during the present study are 
 sample1[ 17, "type"] -> "The datasets generated during the present study are available from the corresponding author on reasonable request."
 sample1[ 19, "Comment"] -> "There are restrictions prohibiting the provision of data in this manuscript. The data were obtained from a third party upon application to the national steering group (NATSUP). All interested researchers can apply for data from the Danish National Health Survey at the National Institute of Public Health (Email: oek@si-folkesundhed.dk)."
 sample1[ 20, "Comment"] -> "The data were collected from hypertensive patients in several hospitals in Ethiopia, and cannot be shared due to patient confidentiality. During data collection, the authors agreed with patients not to share the data publicly. Data requests may be sent to Adigrat University Ethics Review Committee, e-mail: gereahintsa16@gmail.com."
+sample1[ 22, "Comment"] -> "The datasets analyzed during the current study are available from the corresponding author upon reasonable request."
+sample1[ 23, "Comment"] -> "Data supporting the findings are available upon request. Please contact the corresponding author (Ali Kapan at Kapan@gmx.at) for data access."
+sample1[ 24, "Comment"] -> "The datasets generated and/or analysed during the current study are not publicly available due due to IRB regulation of our institution related to personal information but are available from the corresponding author on reasonable request."
+sample1[ 26, "Comment"] -> "Using R 3.3.2 statistical software (R Core Team, 2016), data was simulated through the following steps (script and data available as Supplementary Material or from https://osf.io/qb6mf/)."
+sample1[ 26, "Type"] -> "dat."
+sample1[ 26, "Investigator_comment"] -> "This study did not use an ANCOVA method although code is available and outcomes include summary statistics. It is highly likely to be reproducible, although for for our intent and purposes"
+sample1[ 30, "Comment"] -> "All relevant data are within the manuscript and its Supporting Information file."
+sample1[ 30, "Type"] -> "sav."
 
+@
+
+<<>>=
 
 @
 
