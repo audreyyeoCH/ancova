@@ -26,26 +26,8 @@ library(reshape)
 ### Covariate/s is/are partner libido (continuous)
 ### The ancova design is between factor (dose a,b,c) design with three levels (a,b,c) of Viagra dose
 <<datasetup, echo = FALSE, eval = TRUE>>=
-# adapted from source: https://github.com/giswqs/Learning-R/blob/master/Discovering-Statistics-Using-R/Scripts/Chapter%2011%20DSUR%20GLM2.R
-## name is "db_(insert order from search list)"
-# for SPSS dataset (called sav)
-#library(foreign)
-spss_data <- file.choose("07082019 plos one and scientific advances/169.SAV")
-spss_data <- read.spss(db_169, to.data.frame = TRUE)
-# for excel data sets
-#library(readxl)
-excel_data <- read_excel("07082019 plos one and scientific advances/18.xls")
-# for Stata datasets (called dat)
-#library(readstata13)
-stat_data <- read.dta13("07082019 plos one and scientific advances/174.dta")
-# for csv data sets
-
-#--------Viagra data----------
-libido<-c(3,2,5,2,2,2,7,2,4,7,5,3,4,4,7,5,4,9,2,6,3,4,4,4,6,4,6,2,8,5)
-partnerLibido<-c(4,1,5,1,2,2,7,4,5,5,3,1,2,2,6,4,2,1,3,5,4,3,3,2,0,1,3,0,1,0)
-dose<-c(rep(1,9),rep(2,8), rep(3,13))
-dose<-factor(dose, levels = c(1:3), labels = c("Placebo", "Low Dose", "High Dose"))
-viagraData<-data.frame(dose, libido, partnerLibido)
+Sorjonen_data <- read.delim("data/Sorjonen 2018/Sorjonen 2018.dat", header = TRUE, sep = " ")
+str(Sorjonen_data) 
 @
 ## Enter data and check on ANCOVA assumptions by running anova for independence between DV and Covariate. 
 <<checkindependence, echo = TRUE, eval = TRUE>>=
