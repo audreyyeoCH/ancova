@@ -134,39 +134,53 @@ sample1$DOI[1:10]
 
 <<data input>>=
 
-Comment <- rep(NA, nrow(sample1))
+Data_Avail_Statement <- rep(NA, nrow(sample1))
 Investigator_comment <-  rep(NA, nrow(sample1))
 Type <- rep(NA, nrow(sample1))
-ANCOVA_comment <- rep(NA, nrow(sample1))
-sample1 <- cbind(sample1, Comment, Investigator_comment, Type, ANCOVA_comment)
+ANCOVA_Data_Avail_Statement <- rep(NA, nrow(sample1))
+sample1 <- cbind(sample1, Data_Avail_Statement, Investigator_comment, Type, ANCOVA_Data_Avail_Statement)
 str(sample1)
-sample1[ 3, "Comment"] -> "Not Applicable."
-sample1[ 3, "Comment"] -> "Not Applicable."
-sample1[ 5, "Comment"] -> "The datasets used and/or analyzed during the current study are available from the corresponding author on reasonable request."
-sample1[ 6, "Comment"] -> "All relevant data are within the paper and its Supporting Information files."
-sample1[ 7, "Comment"] -> "All relevant data files are available from Dryad Digital Repository: http://dx.doi.org/10.5061/dryad.1q8h3."
-sample1[ 9, "Comment"] -> "The data are available with DOI:10.6084/m9.figshare.5596921."
+sample1[ 3, "Data_Avail_Statement"] -> "Not Applicable."
+sample1[ 3, "Data_Avail_Statement"] -> "Not Applicable."
+sample1[ 5, "Data_Avail_Statement"] -> "The datasets used and/or analyzed during the current study are available from the corresponding author on reasonable request."
+sample1[ 6, "Data_Avail_Statement"] -> "All relevant data are within the paper and its Supporting Information files."
+sample1[ 7, "Data_Avail_Statement"] -> "All relevant data files are available from Dryad Digital Repository: http://dx.doi.org/10.5061/dryad.1q8h3."
+sample1[ 9, "Data_Avail_Statement"] -> "The data are available with DOI:10.6084/m9.figshare.5596921."
 sample1[ 9, "Type"] -> "txt."
-sample1[ 11, "Comment"] -> "Data sharing is not applicable to this article as no datasets were generated or analysed during the current study."
+sample1[ 11, "Data_Avail_Statement"] -> "Data sharing is not applicable to this article as no datasets were generated or analysed during the current study."
 sample1[ 11, "Investigator_comment"] -> "The txt. file is not raw data."
-sample1[ 14, "Comment"] -> "All relevant data are within the paper."
+sample1[ 14, "Data_Avail_Statement"] -> "All relevant data are within the paper."
 sample1[ 14, "type"] -> "pdf."
-sample1[ 15, "Comment"] -> "All relevant data are within the paper."
+sample1[ 15, "Data_Avail_Statement"] -> "All relevant data are within the paper."
 sample1[ 15, "type"] -> "pdf."
-sample1[ 16, "Comment"] -> "NA"
+sample1[ 16, "Data_Avail_Statement"] -> "NA"
 sample1[ 16, "type"] -> "NA"
-sample1[ 17, "Comment"] -> "The datasets generated during the present study are available from the corresponding author on reasonable request."
+sample1[ 17, "Data_Avail_Statement"] -> "The datasets generated during the present study are available from the corresponding author on reasonable request."
 sample1[ 17, "type"] -> "The datasets generated during the present study are available from the corresponding author on reasonable request."
-sample1[ 19, "Comment"] -> "There are restrictions prohibiting the provision of data in this manuscript. The data were obtained from a third party upon application to the national steering group (NATSUP). All interested researchers can apply for data from the Danish National Health Survey at the National Institute of Public Health (Email: oek@si-folkesundhed.dk)."
-sample1[ 20, "Comment"] -> "The data were collected from hypertensive patients in several hospitals in Ethiopia, and cannot be shared due to patient confidentiality. During data collection, the authors agreed with patients not to share the data publicly. Data requests may be sent to Adigrat University Ethics Review Committee, e-mail: gereahintsa16@gmail.com."
-sample1[ 22, "Comment"] -> "The datasets analyzed during the current study are available from the corresponding author upon reasonable request."
-sample1[ 23, "Comment"] -> "Data supporting the findings are available upon request. Please contact the corresponding author (Ali Kapan at Kapan@gmx.at) for data access."
-sample1[ 24, "Comment"] -> "The datasets generated and/or analysed during the current study are not publicly available due due to IRB regulation of our institution related to personal information but are available from the corresponding author on reasonable request."
-sample1[ 26, "Comment"] -> "Using R 3.3.2 statistical software (R Core Team, 2016), data was simulated through the following steps (script and data available as Supplementary Material or from https://osf.io/qb6mf/)."
+sample1[ 19, "Data_Avail_Statement"] -> "There are restrictions prohibiting the provision of data in this manuscript. The data were obtained from a third party upon application to the national steering group (NATSUP). All interested researchers can apply for data from the Danish National Health Survey at the National Institute of Public Health (Email: oek@si-folkesundhed.dk)."
+sample1[ 20, "Data_Avail_Statement"] -> "The data were collected from hypertensive patients in several hospitals in Ethiopia, and cannot be shared due to patient confidentiality. During data collection, the authors agreed with patients not to share the data publicly. Data requests may be sent to Adigrat University Ethics Review Committee, e-mail: gereahintsa16@gmail.com."
+sample1[ 22, "Data_Avail_Statement"] -> "The datasets analyzed during the current study are available from the corresponding author upon reasonable request."
+sample1[ 23, "Data_Avail_Statement"] -> "Data supporting the findings are available upon request. Please contact the corresponding author (Ali Kapan at Kapan@gmx.at) for data access."
+sample1[ 24, "Data_Avail_Statement"] -> "The datasets generated and/or analysed during the current study are not publicly available due due to IRB regulation of our institution related to personal information but are available from the corresponding author on reasonable request."
+sample1[ 26, "Data_Avail_Statement"] -> "Using R 3.3.2 statistical software (R Core Team, 2016), data was simulated through the following steps (script and data available as Supplementary Material or from https://osf.io/qb6mf/)."
 sample1[ 26, "Type"] -> "dat."
 sample1[ 26, "Investigator_comment"] -> "This study did not use an ANCOVA method although code is available and outcomes include summary statistics. It is highly likely to be reproducible, although for for our intent and purposes"
-sample1[ 30, "Comment"] -> "All relevant data are within the manuscript and its Supporting Information file."
+sample1[ 30, "Data_Avail_Statement"] -> "All relevant data are within the manuscript and its Supporting Information file."
 sample1[ 30, "Type"] -> "sav."
+sample1[ 32, "Data_Avail_Statement"] -> "The datasets during and/or analyzed during the current study available from the corresponding author on reasonable request."
+sample1[ 33, "Data_Avail_Statement"] -> "This DOI cannot be found in the DOI System."
+sample1[ 34, "Data_Avail_Statement"] -> "The datasets generated and/or analyzed during the current study are available from the corresponding authors on specific request."
+sample1[ 35, "Data_Avail_Statement"] -> "The pilot data utilised are not currently available, however the measure developed and study questionnaire can be accessed on request from the corresponding author."
+sample1[ 38, "Data_Avail_Statement"] -> "The datasets will be available upon reasonable request after completion of the study."
+sample1[ 39, "Data_Avail_Statement"] -> "All relevant data are within the paper and its Supporting Information files."
+sample1[ 39, "Type"] -> "xlsx"
+sample1[ 40, "Type"] -> "All data cannot be freely shared without control due to confidentiality. Please contact the corresponding author to request access to non-confidential data."
+sample1[ 42, "Data_Avail_Statement"] -> "All relevant data are within the paper."
+sample1[ 42, "Type"] -> "pdf."
+sample1[ 43, "Data_Avail_Statement"] -> "The dataset used and/or analyzed during the current study is available from the corresponding author on reasonable request."
+sample1[ 44, "Data_Avail_Statement"] -> "Not Applicable."
+sample1[ 45, "Data_Avail_Statement"] -> "Data for this study were sourced from Demographic and Health surveys (DHS) and available from: https://www.dhsprogram.com/data/available-datasets.cfm."
+sample1[ 46, "Data_Avail_Statement"] -> "Dataset is not stored in an open access repository. We will share data with an investigator interested in replicating these findings or interested in future collaborations, pursuant to institutional and legal regulations, in accordance with patient privacy and confidentiality."
 
 @
 
