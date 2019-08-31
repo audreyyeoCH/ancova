@@ -134,16 +134,14 @@ sample1$DOI[1:10]
 
 <<data input>>=
 
-Data_Avail_Statement <- rep(NA, nrow(sample1))
-Investigator_comment <-  rep(NA, nrow(sample1))
-Type <- rep(NA, nrow(sample1))
-ANCOVA_Data_Avail_Statement <- rep(NA, nrow(sample1))
-sample1 <- cbind(sample1, Data_Avail_Statement, Investigator_comment, Type, ANCOVA_Data_Avail_Statement)
+sample1$Data_Avail_Statement <- rep(NA, nrow(sample1))
+sample1$Investigator_comment <-  rep(NA, nrow(sample1))
+sample1$Type <- rep(NA, nrow(sample1))
+sample1$ANCOVA_comment <- rep(NA, nrow(sample1))
 str(sample1)
-sample1[ 3, "Data_Avail_Statement"] -> "Not Applicable."
-sample1[ 3, "Data_Avail_Statement"] -> "Not Applicable."
-sample1[ 5, "Data_Avail_Statement"] -> "The datasets used and/or analyzed during the current study are available from the corresponding author on reasonable request."
-sample1[ 6, "Data_Avail_Statement"] -> "All relevant data are within the paper and its Supporting Information files."
+sample1$Data_Avail_Statement[3] -> "Not Applicable."
+sample1$Data_Avail_Statement[5] -> "The datasets used and/or analyzed during the current study are available from the corresponding author on reasonable request."
+sample1$Data_Avail_Statement[6] -> "All relevant data are within the paper and its Supporting Information files."
 sample1[ 7, "Data_Avail_Statement"] -> "All relevant data files are available from Dryad Digital Repository: http://dx.doi.org/10.5061/dryad.1q8h3."
 sample1[ 9, "Data_Avail_Statement"] -> "The data are available with DOI:10.6084/m9.figshare.5596921."
 sample1[ 9, "Type"] -> "txt."
