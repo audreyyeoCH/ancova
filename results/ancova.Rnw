@@ -142,7 +142,7 @@ str(sample1)
 sample1$Data_Avail_Statement[3] -> "Not Applicable."
 sample1$Data_Avail_Statement[5] -> "The datasets used and/or analyzed during the current study are available from the corresponding author on reasonable request."
 sample1$Data_Avail_Statement[6] -> "All relevant data are within the paper and its Supporting Information files."
-sample1[ 7, "Data_Avail_Statement"] -> "All relevant data files are available from Dryad Digital Repository: http://dx.doi.org/10.5061/dryad.1q8h3."
+sample1$Data_Avail_Statement[7] -> "All relevant data files are available from Dryad Digital Repository: http://dx.doi.org/10.5061/dryad.1q8h3."
 sample1[ 9, "Data_Avail_Statement"] -> "The data are available with DOI:10.6084/m9.figshare.5596921."
 sample1[ 9, "Type"] -> "txt."
 sample1[ 11, "Data_Avail_Statement"] -> "Data sharing is not applicable to this article as no datasets were generated or analysed during the current study."
