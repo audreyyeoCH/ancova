@@ -99,7 +99,7 @@ data.scopus$Source.title <- sub("PloS one", "PLoS ONE", data.scopus$Source.title
 data.scopus$Source.title <- as.factor(as.character(data.scopus$Source.title))
 data.scopus <- data.scopus[idx_PlosOne, ] # a new dataset 
 summary(data.scopus$Source.title) # we now see that Information System Frontiers has been removed and PLoS One has increased in 1 more case.
-nrow(data.scopus)
+nrow(data.scopus) # we have 504 number of journals
 @
 
 <<Top 10 journals with ANCOVA>>=
@@ -113,7 +113,7 @@ knitr::kable(tt10, row.names = TRUE, booktabs = TRUE, format = "latex")
 
 <<Sampling>>=
 set.seed(1980)
-#index = sample(nrow(data.scopus), 20) # we sampled 20 papers
+#index = sample(nrow(data.scopus), 20) # we sampled 50 papers
 #hi <- sample(nrow(data.scopus), 20)
 index = sample(nrow(data.scopus), 50) 
 index
@@ -186,7 +186,6 @@ sample1[ 50, "Type"] <- "pdf."
 sample1[ 50, "Investigator_comment"] <- "This data is in pdf formate where upon closer look, has plots and histologies (images)"
 #see sample1.csv in git to visualise this
 write.csv(sample1, file = "sample1.csv", append = TRUE)
-
 @
 
 <<>>=
