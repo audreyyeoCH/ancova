@@ -25,7 +25,7 @@ opts_chunk$set(
 \begin{document}
 
 \maketitle
-
+A meta-analysis of ANOVA studies in top 25 percent of physiology journals demonstrated that most studies' justifications for using T-tests or ANOVA were vague, limiting the reproducibility of these studies citep\{(Weissburger et al, 2018)}
 \sloppy
 
 <<include=FALSE>>=
