@@ -29,7 +29,9 @@ library(reshape)
 library(foreign)
 spss_data <- file.choose("data/Hye Lim et al 2019/Hye Lim et al 2019.sav")
 spss_data <- read.spss(spss_data, to.data.frame = TRUE, reencode = 'utf-8')
-
+View(spss_data)
+names(spss_data)
+str(spss_data)
 @
 ## Enter data and check on ANCOVA assumptions by running anova for independence between DV and Covariate. 
 <<checkindependence, echo = TRUE, eval = TRUE>>=
