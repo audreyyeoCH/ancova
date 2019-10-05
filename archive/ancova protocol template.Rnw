@@ -47,6 +47,27 @@ dose<-c(rep(1,9),rep(2,8), rep(3,13))
 dose<-factor(dose, levels = c(1:3), labels = c("Placebo", "Low Dose", "High Dose"))
 viagraData<-data.frame(dose, libido, partnerLibido)
 @
+
+
+## Our Model assumption is that
+# 1. errors are independent
+# 2. errors are normally distributed
+# 3. the error variance is constant 
+# 4. the errors have a mean of zero
+
+# 1. Are our errors independent and 2. normally distributed. We perform a QQ Plot for this
+<<first assumption, ECHO = TRUE, EVAL = TRUE>>=
+plot(model, which = 2)
+@
+
+# 3 and 4 is checked with Tukey-Anscombe plot. The T-A plot checks whether the residuals have constant variance and whether the residuals have mean of zero. We could also use an index plot. 
+<<Tukey-Anscombe>>=
+plot(fit, which = 1)
+@
+
+
+
+
 ## Enter data and check on ANCOVA assumptions by running anova for independence between DV and Covariate. 
 <<checkindependence, echo = TRUE, eval = TRUE>>=
 #is DV libido independent to Covariate Partner libido
