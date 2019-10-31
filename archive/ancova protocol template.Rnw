@@ -47,8 +47,6 @@ dose<-c(rep(1,9),rep(2,8), rep(3,13))
 dose<-factor(dose, levels = c(1:3), labels = c("Placebo", "Low Dose", "High Dose"))
 viagraData<-data.frame(dose, libido, partnerLibido)
 @
-
-
 ## Our Model assumption is that
 # 1. errors are independent
 # 2. errors are normally distributed
@@ -57,17 +55,14 @@ viagraData<-data.frame(dose, libido, partnerLibido)
 
 # 1. Are our errors independent and 2. normally distributed. We perform a QQ Plot for this
 <<first assumption, ECHO = TRUE, EVAL = TRUE>>=
-plot(model, which = 2)
+fit = aov(partnerLibido ~ dose, data = viagraData)
+summary(fit)
+plot(fit, which = 2)
 @
-
 # 3 and 4 is checked with Tukey-Anscombe plot. The T-A plot checks whether the residuals have constant variance and whether the residuals have mean of zero. We could also use an index plot. 
 <<Tukey-Anscombe>>=
 plot(fit, which = 1)
 @
-
-
-
-
 ## Enter data and check on ANCOVA assumptions by running anova for independence between DV and Covariate. 
 <<checkindependence, echo = TRUE, eval = TRUE>>=
 #is DV libido independent to Covariate Partner libido
@@ -77,13 +72,11 @@ summary.lm(checkIndependenceModel)
 # at any dose levels, except
 #Levene's Test # homogeneity of variance. Does the variance in outcome varies across different levels of the independent variable?
 leveneTest(viagraData$libido, viagraData$dose, center = median)
-levene.test(viagraData$libido, viagraData$dose)
 @
 ## 2nd assumption of ANCOVA : check for Homogeneity of Regression slopes
 <<>>=
 View(viagraData)
 @
-
 ## ANCOVA analysis
 <<ANCOVA1, echo = FALSE, eval = TRUE>>=
 #contrasts(viagraData$dose)<-contr.helmert(3)
@@ -103,16 +96,13 @@ confint(postHocs)
 
 plot(viagraModel)
 @
-
 ## Check for homogeneity of regression slopes
-
 <<posthoc, echo = FALSE, eval = TRUE>>=
 #Homogeneity of regression slopes
 hoRS<-aov(libido ~ partnerLibido*dose, data = viagraData)
 hoRS<-update(viagraModel, .~. + partnerLibido:dose)
-nova(hoRS, type="III")
+anova(hoRS, type="III")
 @
-
 ### rerun the ANCOVA, including the interaction between the independent variable and the covariate. If this interaction is significant then you cannot assume homoegeneity of regression slopes
 <<self-test, echo = FALSE, eval = TRUE>>=
 anovaModel<-aov(libido ~ dose, data = viagraData)
