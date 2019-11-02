@@ -10,7 +10,7 @@ library(foreign)
 library(readxl)
 library(readstata13)
 library(car) # for levene's test
-library(compute.es)
+library(compute.es)r
 library(effects)# for adjusted means
 library(ggplot2) # for graphs
 library(multcomp) #for post hoc test
