@@ -42,7 +42,7 @@ viagraData<-data.frame(dose, libido, partnerLibido)
 <p align="left">
 - The rationale for ANCOVA is two folds:
   1. Reduce within-group error variance
-  2. Elliminate confounders
+  2. Eliminate confounders
 - An ANOVA is a type of linear regression model, an ANCOVA is an ANOVA, which accounts for potential confounders which are usually continuous variables
 - An ANCOVA model is the analysis of covariance where the variance of the outcome is explained by discrete variable (Independant variable) and covariates which are continuous variables.
 </p>
@@ -58,7 +58,6 @@ viagraData<-data.frame(dose, libido, partnerLibido)
 ```{r, include = TRUE, echo = TRUE, eval = TRUE, tidy = TRUE}
 first_mod <- aov( libido ~dose, data=viagraData)
 summary(first_mod)
-
 ```
 
 
@@ -70,13 +69,13 @@ summary(first_mod)
 ```{r, echo= FALSE, include = TRUE, eval = TRUE, tidy = TRUE}
 #viagraData
 par(mfrow=c(1,2))
-boxplot(libido~dose, data= viagraData, outline = FALSE)
-beeswarm(libido~dose, data= viagraData, main = "Libido", pch = 16, col = rainbow(8), add = TRUE)
-beeswarm(libido~dose, data= viagraData, main = "Libido", pch = 16, col = rainbow(8), add = TRUE)
-bxplot(libido~dose, data = viagraData, add = TRUE)
+beeswarm(libido~dose, data= viagraData, main = "Libido", pch = 16, col = rainbow(8))
+boxplot(libido~dose, data= viagraData, outline = FALSE, main = "Libido") # add = TRUE sometimes work to superimpose both plots
 
-beeswarm(partnerLibido~dose, data= viagraData, pch = 16, col = rainbow(8), main = "Partner Libido" )
-bxplot(partnerLibido ~ dose, data = viagraData, add = TRUE)
+beeswarm(partnerLibido~dose, data= viagraData, pch = 16, col = rainbow(8), main = "Partner Libido")
+boxplot(partnerLibido ~ dose, data = viagraData, outline = FALSE, main = "Partner Libido", add = TRUE) # add = TRUE sometimes work to superimpose both plots
+
+
 
 ```
 ## Explore Data : Descriptives
