@@ -1,0 +1,240 @@
+---
+title: "Untitled"
+author: "Audrey Yeo Te-ying"
+date: "11/13/2019"
+output: html_document
+---
+
+```{r, eval=TRUE, echo=FALSE, include = FALSE}
+#Setting up libraries
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(foreign)
+library(readxl)
+library(readstata13)
+library(car) # for levene's test
+library(effects)# for adjusted means
+library(ggplot2) # for graphs
+library(multcomp) #for post hoc test
+library(pastecs)# for descriptive statistics
+library(reshape)
+library(effects)# for effect command
+library(ggplot2)
+library(beeswarm)
+```
+
+```{r setup, echo=FALSE, eval=TRUE, include= FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+# #--------Viagra data----------
+# libido<-c(3,2,5,2,2,2,7,2,4,7,5,3,4,4,7,5,4,9,2,6,3,4,4,4,6,4,6,2,8,5)
+# partnerLibido<-c(4,1,5,1,2,2,7,4,5,5,3,1,2,2,6,4,2,1,3,5,4,3,3,2,0,1,3,0,1,0)
+# dose<-c(rep(1,9),rep(2,8), rep(3,13))
+# dose<-factor(dose, levels = c(1:3), labels = c("Placebo", "Low Dose", "High Dose"))
+# viagraData<-data.frame(dose, libido, partnerLibido)
+#library(foreign)
+spss_data <- file.choose("07082019 plos one and scientific advances/169.SAV")
+spss_data <- read.spss(db_169, to.data.frame = TRUE)
+# for excel data sets
+#library(readxl)
+excel_data <- read_excel("07082019 plos one and scientific advances/18.xls")
+# for Stata datasets (called dat)
+#library(readstata13)
+stat_data <- read.dta13("07082019 plos one and scientific advances/174.dta")
+# for csv data sets
+#csv_data <- read.csv("", header = TRUE, sep = "")
+```
+
+# Ancova
+
+## Ancova is not Anova
+
+<p align="left">
+  <b> Definitions </b>
+</p>  
+<p align="left">
+- The rationale for ANCOVA is two folds:
+  1. Reduce within-group error variance
+  2. Eliminate confounders
+- An ANOVA is a type of linear regression model, an ANCOVA is an ANOVA, which accounts for potential confounders which are usually continuous variables
+- An ANCOVA model is the analysis of covariance where the variance of the outcome is explained by discrete variable (Independant variable) and covariates which are continuous variables.
+</p>
+
+## Motivation
+
+<b> Libido Study </b> 
+<p align="left">
+- Initial one-way ANOVA show that there is no evidence of significant relationship between dose and libido, motivates to evaluate its underlying covariances to answer :
+- What is the variance explained by three doses of Viagra on Libido?
+- And what is the variance explained by Partner Libido on Libido. 
+</p>
+```{r, include = TRUE, echo = TRUE, eval = TRUE, tidy = TRUE}
+first_mod <- aov(DV ~ IV, data = data)
+summary(first_mod)
+```
+
+
+## Explore Data
+
+<p align="left">
+- Boxplot shows: Does different doses produce different outcomes
+</p>
+```{r, echo= FALSE, include = TRUE, eval = TRUE, tidy = TRUE}
+#viagraData
+par(mfrow=c(1,2))
+beeswarm(DV~IV, data= data, main = " ", pch = 16, col = rainbow(8))
+boxplot(DV~IV, data= data, outline = FALSE, main = " ") # add = TRUE sometimes work to superimpose both plots
+
+par(mfrow=c(1,2))
+beeswarm(COV~IV, data= data, pch = 16, col = rainbow(8), main = " COV ")
+boxplot(COV ~ IV, data = data, outline = FALSE, main = " COV ", add = TRUE) # add = TRUE sometimes work to superimpose both plots
+
+
+
+```
+## Explore Data : Descriptives
+<p align="left">
+- Descriptive Statistics
+</p>
+```{r, include = TRUE, echo = TRUE, eval = TRUE, tidy = TRUE}
+by(data$DV, data$IV, stat.desc)
+by(data$DV, data$IV, stat.desc)
+```
+
+## Explore Data : Graphical analysis for homogeneity of regression slopes
+<p align="left">
+- Say we want to know the overall relationship between Viagra and Partner libido, ignoring which dose groups the data points belong to, we therefore assume that the relationship between dose group and partner libido is constant across all doses. If the latter is not true, then the overall relationship between Viagra and Partner libido is inaccurate.
+- there is homogeneity of regression slopes for Placebo and Lower doses
+- there is no homogeneity of regression slopes for Placebo and High dose
+- That's ok because there are situations where you might actually expect regression slopes to differ across groups and that this is, in itself, an interesting hypothesis. 
+</p>
+
+## Graphical Anaylsis for homogeneity of regression slopes
+
+```{r, include = TRUE, echo = FALSE, eval = TRUE, tidy = TRUE}
+ggplot(data, aes(COV, DV, colour = IV)) +
+  geom_jitter(aes(colour = factor(IV))) +
+  geom_smooth(method = lm)
+```
+
+## Assumption 1 : Homogeneity of variance
+<p align="left">
+- Levene's Test: Are the variances between doses on libido very similar ?
+- A good double-check of Levene’s test is to look at the highest and lowest variances. For our three groups we have standard deviations of 1.79 (placebo), 1.46 (low dose) and 2.12 (high dose)
+</p>
+```{r, include = TRUE, echo = TRUE, eval = TRUE, tidy = TRUE}
+leveneTest(data$DV, data$IV, center = median)
+```
+## Assumption 2 : Check that the covariate and any independent variables are independent
+
+<p align="left">
+- We run an ANOVA to find out if the covariance independant to each of the three doses? 
+- The summary results show that on low and high doses, there is no evidence of significant association of these doses to partner libido.
+</p>
+```{r, eval = TRUE, echo = TRUE}
+checkIndependenceModel<-aov(COV ~ IV, data = data)
+summary(checkIndependenceModel)
+summary.lm(checkIndependenceModel)
+```
+## Running the ANCOVA
+<p align="left">
+</p>
+```{r, include = TRUE, echo = TRUE, eval = TRUE, tidy = TRUE}
+ancova_mod <- aov(DV ~ IV + COV, data= data)
+summary(ancova_mod)
+```
+
+## Interpreting the main effects of ANCOVA
+<p align="left">
+- We run the ANCOVA model and compute the variance per dose group
+- The command aov will calculate the ANCOVA, though it is also used with ANOVA
+- The Anova command shows the same output of the summary.lm command. The former specifies the Type III sum of squares used to compute the analyses variances
+- The Anova results of the viagraModel here show that there is evidence of significant effect of partner libido on libido.
+</p>
+
+## Main effects of ANCOVA
+```{r, include = TRUE, echo = FALSE, eval = TRUE, tidy = TRUE}
+contrasts(data$IV)<-cbind(c(-2,1,1), c(0,-1,1))
+ancovaModel<-aov(DV~ COV + IV, data = data)
+summary.lm(ancovaModel)
+Anova(ancovaModel, type="III")
+#  
+# object<-effect(partnerlibido, viagraModel, se=TRUE)
+# summary(object)
+# object$se
+# 
+# adjustedMeans<-effect("dose", viagraModel, se=TRUE)
+# summary(adjustedMeans)
+# adjustedMeans$se
+
+```
+## Main effects of ANCOVA II
+```{r, include = TRUE, echo = FALSE, eval = TRUE, tidy = TRUE}
+Anova(ancovaModel, type="III")
+#  
+# object<-effect(partnerlibido, viagraModel, se=TRUE)
+# summary(object)
+# object$se
+# 
+# adjustedMeans<-effect("dose", viagraModel, se=TRUE)
+# summary(adjustedMeans)
+# adjustedMeans$se
+
+```
+
+## Residuals vs Fitted : Testing for Homogeneity of Variance
+<p align="left">
+- The residuals for fitted value are similar to zero
+</p>
+```{r, include = TRUE, echo = FALSE, eval = TRUE, tidy= TRUE, fig.width = 6, fig.height = 5}
+plot(ancovaModel, which = 1)
+```
+
+## QQ plots
+<p align="left">
+- Residuals are normally distributed
+- estimate in each case is the difference between the adjusted group means
+</p>
+```{r, include = TRUE, echo = FALSE, eval = TRUE, tidy =TRUE, fig.width = 4, fig.height = 5}
+plot(ancovaModel, which = 2)
+```
+## Post Hoc Tests 
+<p align="left">
+- A Tukey-Ascombe test is performed via a general linear hypotheses function from library(multcomp).
+- It is used for a pairwise comparison t test between doses for between groups differences
+- In other words: we want to test differences between the adjusted means.
+- In this case, the differences between Higher dose and Placebo can be compared with evidence of significance.
+- In this method, we are restricted to the Tukey and the Dunnett method.
+</p>
+```{r, include = TRUE, echo = TRUE, eval = TRUE}
+postHocs<-glht(ancovaModel, linfct = mcp(dose = "Tukey"))
+summary(postHocs)
+confint(postHocs)
+```
+## Going back to Basic Assumptions : Homogeneity of Regression Slopes
+<p align="left">
+- "The significant between interaction effect and dose show that the assumption is not tenable..
+- "Although this finding is not surprising given the pattern of relationships, it does raise concern about the main analysis. This example illustrates why it is important to test assumptions and not to just blindly accept the results of an analysis"
+</p>
+```{r, include = TRUE, echo = TRUE, eval = TRUE}
+hoRS<-aov(DV ~ COV*IV, data = viagraData)
+hoRS<-update(ancovaModel, .~. + COV:IV)
+df <- Anova(hoRS, type="III")
+df <- df[3, 3:4]
+```
+
+## Summary and Conclusion
+<p align="left">
+- ANOVA is not ANCOVA because the latter accounts for analysis of variance of the covariate or covariates
+- Interpretation of ANCOVA depends on the order in the aov(...) function
+- Basic Assumptions are important because for example the overall conclusion of the relationship between Viagra and Libido must be based on an independance assumption between covariates and dose of Viagra
+- Thus the conclusion that Partner libido has a significant influence on Libido under three condition of Viagra dose, is inaccurate.
+</p>
+
+## Creating a data frame 
+<p align="left">
+- 
+</p>
+```{r}
+
+```
+
