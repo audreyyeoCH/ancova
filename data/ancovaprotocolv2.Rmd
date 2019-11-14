@@ -218,7 +218,7 @@ confint(postHocs)
 ```{r, include = TRUE, echo = TRUE, eval = TRUE}
 hoRS<-aov(DV ~ COV*IV, data = viagraData)
 hoRS<-update(ancovaModel, .~. + COV:IV)
-df <- Anova(hoRS, type="III")
+df0 <- Anova(hoRS, type="III")
 df <- df[3, 3:4]
 ```
 
