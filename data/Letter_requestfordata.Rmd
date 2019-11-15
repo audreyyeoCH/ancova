@@ -18,13 +18,13 @@ XXXX
 and our protocol can be found here:
 XXXX
 
-Our study designed involves sampling some articles matching the aforementioned criteria. Your study  entitled ‘XXXX’ recently published in ‘XXXX” is one such study we had sampled. I would greatly appreciate if you can share with us the data from this study and exact which are your Dependant variables, Independent Variables and Covariates. To make this a productive process, we would additionally appreciate any analysis code that might be relevant to your ANCOVA analyses such that if different estimates are obtained on our end, so we can properly understand yours with minimal effort on your part as possible.
+Our study designed involves sampling some articles matching the aforementioned criteria. Your study entitled ‘XXXX’ recently published in ‘XXXX” is one such study we had sampled. I would greatly appreciate if you can share with us the data from this study and exact which are your Dependant variables, Independent Variables and Covariates. To make this a productive process, we would additionally appreciate any analysis code that might be relevant to your ANCOVA analyses such that if different estimates are obtained on our end, so we can properly understand yours with minimal effort on your part as possible.
 
 The findings of our study is aimed at informing ourselves best teaching and statistical practices in these important fields. More information of our centre is mentioned below. We thank you for your assistance in advance. Please reach out to us if you have any questions and we would be happy to elaborate more on the purpose of our study.  
 
 Best regards,
 
-Audrey Yeo, M Nursing (University of Sydney), M Biostatistics candidate (University of Zurich)
+Audrey Yeo, R.N., M Nursing (University of Sydney), Cert. Clin Trials Practice, M Biostatistics candidate (University of Zurich)
 audreytyeo@gmail.com
 audreytyeo@uzh.ch
 Dr. Simon Schwab, M Science, PhD (University of Bern)
