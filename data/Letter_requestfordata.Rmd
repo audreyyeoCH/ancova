@@ -11,7 +11,7 @@ library(rmarkdown)
 ```
 Dear Pr.  Dr. (context specific)
 
-Dr Simon Schwab and I are Scientists at the Centre for Reproducible Science, University of Zurich, Switzerland. We are interested in re-analyzing the primary outcomes of all the trials that have been used Analysis of Covariance by highly ranked journals and in the fields of medicine, psychiatry, psychology and neuroscience. We want to understand how ANCOVA is used by these fields.
+Dr Simon Schwab and I are Scientists at the Centre for Reproducible Science, University of Zurich, Switzerland. We are interested in re-analyzing the primary outcomes of all the trials that have been used Analysis of Covariance (ANCOVA) by highly ranked journals and in the fields of medicine, psychiatry, psychology and neuroscience. We want to understand how ANCOVA is used by these fields.
 
 Our study is registered here: 
 XXXX
@@ -37,6 +37,7 @@ Hirschengraben 84
 Switzerland
 Tel : +41 (0) 44 634 4976 (Dr. Simon Schwab)
 website : https://www.crs.uzh.ch/en.html
+twitter : CRS@UZH
 
 About our center:
 The reproducibility of scientific findings is crucial for the credibility of empirical research. The objective of the Center for Reproducible Science (CRS) is to train the next generation of researchers. With the development of novel methodology related to reproducibility and replicability, the center will improve the efficiency of scientific investigation using meta-science. The CRS is an approved Center of Competence of the University of Zurich.
