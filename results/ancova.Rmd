@@ -1,0 +1,123 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Variables
+```{r}
+PATH_HOME = path.expand("~") # user home
+if ( grepl("simon", PATH_HOME) ) {
+  PATH = file.path(PATH_HOME, 'Data/ancova')
+} else {
+  PATH = file.path(PATH_HOME, 'Desktop/CRS/ancova')
+}
+
+# folders
+PATH_RESULTS = file.path(PATH, 'results')
+PATH_DATA    = file.path(PATH, 'data')
+PATH_FIGURES = file.path(PATH_RESULTS, 'figures')
+
+# scopus datafiles
+FILE_SCOPUS_ALL = 'scopus_export-01112019.csv'
+
+# journal metrics
+FILE_JOURNALS_MED = 'scimagojr_2018_medicine.csv'
+FILE_JOURNALS_PSY = 'scimagojr_2018_psychology.csv'
+FILE_JOURNALS_NEURO = 'scimagojr_2018_neuroscience.csv'
+FILE_JOURNALS_MULTI = 'scimagojr_2018_multidis.csv'
+```
+# Libraries
+```{r}
+library(openxlsx)
+```
+
+# Load data
+```{r}
+# Load ANCOVA studies
+data.scopus = read.csv2(file.path(PATH_DATA, FILE_SCOPUS_ALL), header = TRUE, sep = ",", row.names = NULL)
+# remove column Link
+
+# Load journal metrics
+raw = readLines(file.path(PATH_DATA, FILE_JOURNALS_MED))
+# problem with "Wei sheng yan jiu\" bian ji bu\"
+raw = gsub("Wei sheng yan jiu\" bian ji bu", "Wei sheng yan jiu bian ji bu", raw)
+data.med = read.csv2(text = raw, header = TRUE, sep = ";", row.names = NULL)
+data.med$Rank.percentile = rev(data.med$Rank)/nrow(data.med)
+data.med$category = "medicine"
+
+data.psy = read.csv2(file.path(PATH_DATA, FILE_JOURNALS_PSY), header = TRUE, sep = ";", row.names = NULL)
+data.psy$Rank.percentile = rev(data.psy$Rank)/nrow(data.psy)
+data.psy$category = "psychology"
+
+data.neuro = read.csv2(file.path(PATH_DATA, FILE_JOURNALS_NEURO), header = TRUE, sep = ";", row.names = NULL)
+data.neuro$Rank.percentile = rev(data.neuro$Rank)/nrow(data.neuro)
+data.neuro$category = "neuroscience"
+
+data.multi = read.csv2(file.path(PATH_DATA, FILE_JOURNALS_MULTI), header = TRUE, sep = ";", row.names = NULL)
+data.multi$Rank.percentile = rev(data.multi$Rank)/nrow(data.multi)
+data.multi$category = "multidisciplinary"
+
+# we go from small category to large and remove duplicated journals
+# i.e. a journal belonging to all categories would be assigned to the smalles
+data.journal = rbind(data.multi, data.neuro, data.psy, data.med)
+data.journal = subset(data.journal, subset = !duplicated(data.journal$Title))
+data.journal$category = as.factor(data.journal$category)
+rm(data.med, data.psy, data.neuro, data.multi)
+```
+
+# Combine scopus database with journal metrics
+```{r}
+# Filter to improve matching of journal names
+titles = as.character(data.scopus$Source.title)
+# titles = gsub("^the ", "", titles, ignore.case = TRUE) # remove "the"
+# grep("Lancet", titles, value = TRUE, ignore.case = TRUE)
+data.scopus$Source.title.clean = as.factor(titles)
+
+# Add journals metrics to scopus database using clean titles
+data.scopus$Rank.percentile = NA
+data.scopus$SJR = NA
+data.scopus$category = NA
+for (i in 1:nrow(data.journal)) {
+  pattern = paste0("^", data.journal$Title[i], "$")
+  idx = grepl(pattern, titles, ignore.case = TRUE)
+  data.scopus$Rank.percentile[idx] = data.journal$Rank.percentile[i]
+  data.scopus$SJR[idx] = data.journal$SJR[i]
+  data.scopus$category[idx] = as.character(data.journal$category[i])
+}
+data.scopus$category = as.factor(data.scopus$category)
+```
+
+```{r}
+# Sample inclusion
+data.included = subset(data.scopus, subset = !is.na(data.scopus$category) & 
+                       data.scopus$Rank.percentile > 0.95)
+rownames(data.included) = 1:nrow(data.included)
+```
+
+
+# Descriptives
+```{r}
+tab = array(sprintf("%d (%.2f)", summary(data.included$category), summary(data.included$category)/nrow(data.included)), dim = c(1,4))
+colnames(tab) = levels(data.included$category)
+print(tab)
+# summary(data.scopus$Source.title[is.na(data.scopus$category)])[1:20] # most frequent journals with no category. did we miss something?
+```
+
+
+# Sampling
+```{r}
+k = 10 # paper per category
+selection = array(NA, dim=c(k, nlevels(data.included$category)))
+
+for (i in 1:nlevels(data.included$category)){
+  set.seed(1980)
+  selection[,i] = sample(which(data.included$category == levels(data.included$category)[i]), k)
+}
+
+data.sample = data.included[c(selection),]
+summary(data.sample$category)
+
+data.sample[,c("Source.title", "category", "Year", "DOI", "Rank.percentile")]
+write.xlsx(data.sample, "sample.xlsx")
+```
+
