@@ -1,34 +1,47 @@
 ---
-title: "R Notebook"
-output:
-  word_document: default
-  html_notebook: default
+title: "Letter to researchers of ANCOVA"
+rmd_output_metadata:
+  rsc_email_subject: Request of your dataset for our ANCOVA meta-analysis
 ---
 
 ```{r setup, echo  = FALSE, eval = TRUE}
 library(knitr)
 library(rmarkdown)
+library(blastula)
 ```
+
+```{r hey, echo = TRUE, eval = FALSE}
+email <- blastula::compose_email(
+  body = "
 Dear Pr.  Dr. (context specific)
+
 
 Dr Simon Schwab and I are Scientists at the Centre for Reproducible Science, University of Zurich, Switzerland. We are interested in re-analyzing the primary outcomes of all the trials that have been used Analysis of Covariance (ANCOVA) by highly ranked journals and in the fields of medicine, psychiatry, psychology and neuroscience. We want to understand how ANCOVA is used by these fields.
 
+
+Our study is entitled:
+Robustnes of analysis of covariance in the medical and psychology literature: A meta-research study
 Our study is registered here: 
 XXXX
 and our protocol can be found here:
 XXXX
 
+
 Our study designed involves sampling some articles matching the aforementioned criteria. Your study entitled ‘XXXX’ recently published in ‘XXXX” is one such study we had sampled. I would greatly appreciate if you can share with us the data from this study and exact which are your Dependant variables, Independent Variables and Covariates. To make this a productive process, we would additionally appreciate any analysis code that might be relevant to your ANCOVA analyses such that if different estimates are obtained on our end, so we can properly understand yours with minimal effort on your part as possible.
+
 
 The findings of our study is aimed at informing ourselves best teaching and statistical practices in these important fields. More information of our centre is mentioned below. We thank you for your assistance in advance. Please reach out to us if you have any questions and we would be happy to elaborate more on the purpose of our study.  
 
+
 Best regards,
 
-Audrey Yeo, R.N., M Nursing (University of Sydney), Cert. Clin Trials Practice, M Biostatistics candidate (University of Zurich)
+
+Audrey Yeo, R.N., M. Nursing (University of Sydney), Cert. Clin Trials Practice, MSc. Biostatistics candidate (University of Zurich)
 audreytyeo@gmail.com
 audreytyeo@uzh.ch
-Dr. Simon Schwab, M Science, PhD (University of Bern)
+Dr. Simon Schwab, MSc. Psychology, PhD (University of Bern)
 simon.schwab@uzh.ch
+
 
 Centre for Reproducible Science
 University of Zurich
@@ -39,5 +52,17 @@ Tel : +41 (0) 44 634 4976 (Dr. Simon Schwab)
 website : https://www.crs.uzh.ch/en.html
 twitter : CRS@UZH
 
+
 About our center:
-The reproducibility of scientific findings is crucial for the credibility of empirical research. The objective of the Center for Reproducible Science (CRS) is to train the next generation of researchers. With the development of novel methodology related to reproducibility and replicability, the center will improve the efficiency of scientific investigation using meta-science. The CRS is an approved Center of Competence of the University of Zurich.
+The reproducibility of scientific findings is crucial for the credibility of empirical research. The objective of the Center for Reproducible Science (CRS) is to train the next generation of researchers. With the development of novel methodology related to reproducibility and replicability, the center will improve the efficiency of scientific investigation using meta-science. The CRS is an approved Center of Competence of the University of Zurich. " )
+
+
+```
+
+
+
+```{r notes, eval = FALSE, echo = FALSE}
+#source: https://blog.rstudio.com/2018/07/26/rstudio-connect-1-6-6-custom-emails/
+#https://docs.rstudio.com/connect/1.6.6/user/r-markdown.html#r-markdown-email-body
+```
+
