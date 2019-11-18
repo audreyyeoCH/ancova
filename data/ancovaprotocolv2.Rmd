@@ -25,23 +25,16 @@ library(beeswarm)
 
 ```{r setup, echo=FALSE, eval=TRUE, include= FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-# #--------Viagra data----------
-# libido<-c(3,2,5,2,2,2,7,2,4,7,5,3,4,4,7,5,4,9,2,6,3,4,4,4,6,4,6,2,8,5)
-# partnerLibido<-c(4,1,5,1,2,2,7,4,5,5,3,1,2,2,6,4,2,1,3,5,4,3,3,2,0,1,3,0,1,0)
-# dose<-c(rep(1,9),rep(2,8), rep(3,13))
-# dose<-factor(dose, levels = c(1:3), labels = c("Placebo", "Low Dose", "High Dose"))
-# viagraData<-data.frame(dose, libido, partnerLibido)
-#library(foreign)
-spss_data <- file.choose("07082019 plos one and scientific advances/169.SAV")
-spss_data <- read.spss(db_169, to.data.frame = TRUE)
-# for excel data sets
-#library(readxl)
-excel_data <- read_excel("07082019 plos one and scientific advances/18.xls")
-# for Stata datasets (called dat)
-#library(readstata13)
-stat_data <- read.dta13("07082019 plos one and scientific advances/174.dta")
-# for csv data sets
-#csv_data <- read.csv("", header = TRUE, sep = "")
+if (grepl("SAV", ignore.case = FALSE)) {
+  spss_data <- file.choose("07082019 plos one and scientific advances/169.SAV")
+  spss_data <- read.spss(db_169, to.data.frame = TRUE)
+} else {
+  if (grepl("xls", ignore.case = FALSE) ){
+    excel_data <- read_excel("07082019 plos one and scientific advances/18.xls")
+  }} else {
+  if (grepl("dta", ignore.case = FALSE) )
+stat_data <- read.dta13("07082019 plos one and scientific advances/174.dta") }}}
+
 ```
 
 # Ancova
