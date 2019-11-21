@@ -19,7 +19,7 @@ Dr Simon Schwab and I are Scientists at the Centre for Reproducible Science, Uni
 
 
 Our study is entitled:
-Robustnes of analysis of covariance in the medical and psychology literature: A meta-research study
+Robustness of analysis of covariance in the medical and psychology literature: A meta-research study
 Our study is registered here: 
 XXXX
 and our protocol can be found here:
