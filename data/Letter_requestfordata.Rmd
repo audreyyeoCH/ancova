@@ -10,46 +10,46 @@ library(rmarkdown)
 library(blastula)
 ```
 
+```{r loading file}
+temp <- read.csv(".csv",header = FALSE)
+contactlist <- data.frame(temp)
+email <- m[2,14]
+rollno <- m[2,1]
+file <- read.table(, header = TRUE, sep = "")
+```
+
+
+```{r function to send email, echo = FALSE, eval = TRUE}
+send.mail(from = "user@gmail.com",
+          to = email,
+          subject = # ??
+          body ="C://Mehul_Katara//New_folder_(2)//131004.txt"
+          smtp = list(host.name = "smtp.gmail.com", port = 465, user.name = "user@gmail.com", passwd = "password", ssl = TRUE),              
+          authenticate = TRUE,
+          send = TRUE)
+```
+
 ```{r hey, echo = TRUE, eval = FALSE}
 email <- blastula::compose_email(
   body = "
-Dear Pr.  Dr. (context specific)
+Dear Dr XY
 
-Dr Simon Schwab and I are Scientists at the Centre for Reproducible Science, University of Zurich, Switzerland. We are interested in re-analyzing the primary outcomes of all the trials that have been used Analysis of Covariance (ANCOVA) by highly ranked journals and in the fields of medicine, psychiatry, psychology and neuroscience. We want to understand how ANCOVA is used by these fields.
+We are researchers at the Centre for Reproducible Science at University of Zurich, Switzerland. We are interested in re-analyzing studies using Analysis of Covariance (ANCOVA) published in highly ranked journals and in the fields of medicine, multidisciplinary science, neuroscience and psychiatry. We want to explore how many studies share data when requested and if we are able to reanalyze results from ANCOVA. Our study has been registered and the protocol is available here: https://osf.io/4mfdh/. 
 
+Your study entitled ‘XXXX’ recently published in ‘XXXX” is one such study we had sampled. We would greatly appreciate it if you can share with us a minimal dataset from your study (with explained labels for each variable) and some analysis code that might be relevant. We do not require the full data, only the minimal dataset to reproduce the ANCOVA result. Also, if your paper contains multiple ANCOVAs, we only aim to reproduce the first one reported in the paper. We kindly ask you to specify which are your dependent variables, independent variables and covariates in the excel file attached. We would highly appreciate it if data can be made available in the next 14 days, if possible.
 
-Our study is entitled:
-Robustness of analysis of covariance in the medical and psychology literature: A meta-research study
-Our study is registered here: 
-XXXX
-and our protocol can be found here:
-XXXX
+The findings of our study are aimed to improve teaching of best statistical practices and to improve the reproducibility of research findings. We thank you for your assistance in advance. Please reach out to us if you have any questions and we would be happy to elaborate more on the purpose of our study.
 
+Kind regards,
 
-Our study designed involves sampling some articles matching the aforementioned criteria. Your study entitled ‘XXXX’ recently published in ‘XXXX” is one such study we had sampled. I would greatly appreciate if you can share with us the data from this study and exact which are your Dependant variables, Independent Variables and Covariates. To make this a productive process, we would additionally appreciate any analysis code that might be relevant to your ANCOVA analyses such that if different estimates are obtained on our end, so we can properly understand yours with minimal effort on your part as possible.
+Simon Schwab
+Aurey Yeo
 
-The findings of our study is aimed at informing ourselves best teaching and statistical practices in these important fields. More information of our centre is mentioned below. We thank you for your assistance in advance. Please reach out to us if you have any questions and we would be happy to elaborate more on the purpose of our study.  
-
-Best regards,
-
-Audrey Yeo, R.N., M. Nursing (University of Sydney), Cert. Clin Trials Practice, MSc. Biostatistics candidate (University of Zurich)
-audreytyeo@gmail.com
-audreytyeo@uzh.ch
-Dr. Simon Schwab, MSc. Psychology, PhD (University of Bern)
-simon.schwab@uzh.ch
-
-Centre for Reproducible Science
+- - 
+Simon Schwab, PhD
 University of Zurich
-Hirschengraben 84
-8001 Zurich
-Switzerland
-Tel : +41 (0) 44 634 4976 (Dr. Simon Schwab)
-website : https://www.crs.uzh.ch/en.html
-twitter : CRS@UZH
-
-About our center:
-The reproducibility of scientific findings is crucial for the credibility of empirical research. The objective of the Center for Reproducible Science (CRS) is to train the next generation of researchers. With the development of novel methodology related to reproducibility and replicability, the center will improve the efficiency of scientific investigation using meta-science. The CRS is an approved Center of Competence of the University of Zurich. " )
-
+Center for Reproducible Science
+Hirschengraben 84 | 8001 Zurich | Switzerland | Phone: +41 44 63 44976 | simon.schwab@uzh.ch | www.crs.uzh.ch | https://schw4b.github.io
 
 ```
 
