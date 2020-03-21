@@ -53,7 +53,7 @@ for (i in seq_along(temp)) { #same result as above
           temp$JournalTitle[i]))
 }
 
-sprintf(mail1, # this works for mail1[1] only
+sprintf(mail1, # this works for mail1[1] only #maybe create Txt. files so input to function send.mail
           "Author",
           temp$ArticleTitle[i],
           temp$JournalTitle[i])
