@@ -42,6 +42,10 @@ class(i)
 # creating email object
 email <- sprintf(email, Author[[i]][1], contactlist$ArticleTitle, contactlist$JournalTitle) 
 
+compose <- blastula::compose_email(
+  body = email
+)
+
 
 ```
 
@@ -54,14 +58,10 @@ for (i in 1:n)
 blastula::send.mail(from = "ancovacrs@gmail.com",
           to = contactlist$Email..first.last.corresponding.,
           subject = "Request for data for meta-research study",
-          body = mail1,  #can it be a string or a file
+          body = email,  #can it be a string or a file
           smtp = list(host.name = "smtp.gmail.com", port = 465, user.name = "ancovacrs@gmail.com", passwd = "ancova_crs2020", ssl = TRUE),              
           authenticate = TRUE,
           send = TRUE)
-#mail1 <- "Dear Dr"
-name <- name[Included = "Yes",]
-
-save(email, txt)
 
 attachment <- list(read_excel("ANCOVAmetaresearchSchwabandYeo.xlsx") )
 rsc_email_attachments = attachment
