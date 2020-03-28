@@ -20,9 +20,6 @@ contactlist <- contactlist[contactlist$Included == "Yes",] #1x40
 journal <- contactlist[1:40,23]
 name <- contactlist[,1]
 article <- contactlist[1:40,3]
-
-
-
 ```
 
 
@@ -30,15 +27,25 @@ article <- contactlist[1:40,3]
 email <-"Dear Dr %s and colleagues, It is a difficult time but we hope this email finds you well. We are researchers at the Centre for Reproducible Science at University of Zurich, Switzerland. We are interested in re-analyzing studies using Analysis of Covariance (ANCOVA) published in highly ranked journals and in the fields of medicine, multidisciplinary science, neuroscience and psychiatry. We want to explore how many studies share data when requested and if we are able to reanalyze results from ANCOVA. Our study has been registered and the protocol is available here: https://osf.io/4mfdh/. Your study entitled ‘%s’ recently published in ‘%s’ is one such study we had sampled. We would greatly appreciate it if you can share with us a minimal dataset from your study (with explained labels for each variable) and some analysis code that might be relevant. We do not require the full data, only the minimal dataset to reproduce the ANCOVA result. Also, if your paper contains multiple ANCOVAs, we only aim to reproduce the first one reported in the paper. We kindly ask you to specify which are your dependent variables, independent variables and covariates in the excel file attached. We would highly appreciate it if data can be made available in the next 14 days, if possible. It is a difficult time but we hope for your support so we can continue our research project. The findings of our study are aimed to improve teaching of best statistical practices and to improve the reproducibility of research findings. We thank you for your assistance in advance. Please reach out to us if you have any questions and we would be happy to elaborate more on the purpose of our study. Kind regards,Simon Schwab Audrey Yeo \\n -- Simon Schwab, PhD University of Zurich Center for Reproducible Science Hirschengraben 84 | 8001 Zurich | Switzerland | Phone: +41 44 63 44976 | simon.schwab@uzh.ch | www.crs.uzh.ch | https://schw4b.github.io"
 
 Author <- strsplit(as.character(contactlist$Authors), split = ",")
-Author <- as.list(Author)
+class(Author)
+
+
 for (i in 1:40) {
  Author <- list(Author[[1:40]][1])
 }
 # or
-for (i in 1:40) { assign(Author, list(Author[[i]][1])) }
+for (i in 1:40) { assign(Author, as.data.frame(Author[[i]][1])) }
 #or
 i = as.vector(seq(1,40,1))
 class(i)
+for (i in 1:40) {
+ Author <- Author[[i]][1]
+}
+
+Author[[1]][1]
+
+for (i in 1:4){ Author[[1]][1]}
+
 # creating email object
 email <- sprintf(email, Author[[i]][1], contactlist$ArticleTitle, contactlist$JournalTitle) 
 
@@ -65,7 +72,7 @@ blastula::send.mail(from = "ancovacrs@gmail.com",
 
 attachment <- list(read_excel("ANCOVAmetaresearchSchwabandYeo.xlsx") )
 rsc_email_attachments = attachment
-
+#producing the email outputs
 rmarkdown::output_metadata$set(
     rsc_email_body_html = email$html_str,
     rsc_email_attachments = attachment)
